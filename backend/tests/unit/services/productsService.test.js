@@ -1,7 +1,7 @@
 const { expect } = require('chai');
 const sinon = require('sinon');
 
-/* const connection = require('../../../src/models/connection'); */
+const connection = require('../../../src/models/connection');
 const productsService = require('../../../src/services/productsService');
 const productsModel = require('../../../src/models/productsModel');
 
@@ -22,5 +22,19 @@ describe('Testa a camada service', function () {
     const result = await productsService.getProductsById(1);
 
     expect(result).to.deep.equal(productById);
+  });
+
+  it('Testa se foi inserido um novo produto', async function () {
+    const newProduct = {
+      id: 4,
+      name: 'Produto X',
+    };
+
+    sinon.stub(connection, 'execute').resolves([{ insertId: 4 }]);
+    sinon.stub(productsModel, 'insertProduct').resolves(newProduct);
+
+    const insert = await productsService.insertProduct('Produto X');
+
+    expect(insert).to.deep.equal(newProduct);
   });
 });

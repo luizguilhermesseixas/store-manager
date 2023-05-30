@@ -41,5 +41,22 @@ describe('Testa a camada model', function () {
     expect(result).to.deep.equal(product);
   });
 
+  it('Testa se um novo produto é inserido', async function () {
+    const newProduct = {
+      id: 5,
+      name: 'ProdutoX',
+    };
+
+    sinon.stub(connection, 'execute')
+    .onFirstCall().resolves([{ insertId: 5 }])
+    .onSecondCall()
+    .resolves([[newProduct]]);
+
+    sinon.stub(productsModel, 'getProductsById').resolves([[newProduct]]);
+
+    const result = await productsModel.insertProduct('ProdutoX');
+    expect(result).to.deep.equal(newProduct);
+  });
+
   afterEach(sinon.restore);
 });
