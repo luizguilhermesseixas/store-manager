@@ -13,7 +13,16 @@ const getSalesById = async (req, res) => {
   return res.status(status).json(message);
 };
 
+const insertSalesProducts = async (req, res) => {
+  const saleProducts = req.body;
+
+  const { status, message } = await salesService.insertSalesProducts(saleProducts);
+
+  res.status(status).json(message);
+};
+
 module.exports = {
   getAllSales,
   getSalesById,
+  insertSalesProducts,
 };

@@ -1,4 +1,4 @@
-// const snakeize = require('snakeize');
+const snakeize = require('snakeize');
 
 const connection = require('./connection');
 
@@ -35,23 +35,22 @@ const getSalesById = async (id) => {
   ORDER BY
     saleProduct.sale_id;
 `, [id]);
-  console.log(result);
   return result;
 };
 
-/* const insertSales = async () => {
+const insertSales = async () => {
   const [{ insertId }] = await connection.execute(
     'INSERT INTO StoreManager.sales() VALUE();',
   );
   return insertId;
 };
 
-const insertSalesProducts = async (product) => {
-  const columns = Object.keys(snakeize(product))
+const insertSalesProducts = async (salesProducts) => {
+  const columns = Object.keys(snakeize(salesProducts))
     .map((eachKey) => `${eachKey}`)
     .join(', ');
 
-  const columnValues = Object.keys(product)
+  const columnValues = Object.keys(salesProducts)
     .map((_eachKey) => '?')
     .join(', ');
 
@@ -59,13 +58,13 @@ const insertSalesProducts = async (product) => {
     `
     INSERT INTO StoreManager.sales_products (${columns})
     VALUE (${columnValues});`,
-    [...Object.values(product)],
+    [...Object.values(salesProducts)],
   );
-}; */
+};
 
 module.exports = {
   getAllSales,
   getSalesById,
-/*   insertSales,
-  insertSalesProducts, */
+  insertSales,
+  insertSalesProducts,
 };
