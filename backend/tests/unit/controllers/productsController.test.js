@@ -43,6 +43,24 @@ describe('Testa a camada controller', function () {
     expect(res.json).to.have.been.calledWith(productById);
   });
 
+  it('Teste se não retorna os produtos buscados pelo id', async function () {
+    const res = {};
+    const req = {
+      params: {
+        id: 9999,
+      },
+    };
+
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+    sinon.stub(productsService, 'getProductsById').resolves(undefined);
+
+    await productsController.getProductsById(req, res);
+
+    expect(res.status).to.have.been.calledWith(404);
+    expect(res.json).to.have.been.calledWith(undefined);
+  });
+
   it('Testa se foi inserido um novo produto', async function () {
     const res = {};
     const req = {

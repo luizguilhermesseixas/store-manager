@@ -9,7 +9,7 @@ const getAllProducts = async (_req, res) => {
 const getProductsById = async (req, res) => {
   const { id } = req.params;
   const productsById = await productsService.getProductsById(id);
-
+  // console.log(productsById);
   if (!productsById) {
     res.status(404).json({ message: 'Product not found' });
   }
@@ -20,6 +20,7 @@ const getProductsById = async (req, res) => {
 const insertProduct = async (req, res) => {
   const { name } = req.body;
   const insertedProduct = await productsService.insertProduct(name);
+  // console.log(insertedProduct);
 
   return res.status(201).json(insertedProduct);
 };

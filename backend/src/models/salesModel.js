@@ -1,3 +1,5 @@
+// const snakeize = require('snakeize');
+
 const connection = require('./connection');
 
 const getAllSales = async () => {
@@ -37,7 +39,33 @@ const getSalesById = async (id) => {
   return result;
 };
 
+/* const insertSales = async () => {
+  const [{ insertId }] = await connection.execute(
+    'INSERT INTO StoreManager.sales() VALUE();',
+  );
+  return insertId;
+};
+
+const insertSalesProducts = async (product) => {
+  const columns = Object.keys(snakeize(product))
+    .map((eachKey) => `${eachKey}`)
+    .join(', ');
+
+  const columnValues = Object.keys(product)
+    .map((_eachKey) => '?')
+    .join(', ');
+
+  await connection.execute(
+    `
+    INSERT INTO StoreManager.sales_products (${columns})
+    VALUE (${columnValues});`,
+    [...Object.values(product)],
+  );
+}; */
+
 module.exports = {
   getAllSales,
   getSalesById,
+/*   insertSales,
+  insertSalesProducts, */
 };
