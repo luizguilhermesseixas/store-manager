@@ -57,5 +57,26 @@ describe('Testa a camada model de sales', function () {
     expect(result).to.deep.equal(sale);
   });
 
+  it('Testa se foi inserida uma nova venda', async function () {
+    sinon.stub(connection, 'execute').resolves(undefined);
+    const result = await salesModel.insertSalesProducts([
+      {
+        productId: 1,
+        quantity: 1,
+      },
+      {
+        productId: 2,
+        quantity: 5,
+      },
+    ]);
+    expect(result).to.deep.equal(undefined);
+  });
+
+  it('Testa se retorna o id da venda', async function () {
+    sinon.stub(connection, 'execute').resolves([{ insertId: 1 }]);
+    const result = await salesModel.insertSales();
+    expect(result).to.deep.equal(1);
+  });
+
   afterEach(sinon.restore);
 });

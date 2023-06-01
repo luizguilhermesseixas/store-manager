@@ -43,5 +43,47 @@ describe('Testa a camada controller de sales', function () {
     expect(res.json).to.have.been.calledWith(message);
   });
 
+  it('Testa se insere as vendas no banco de dados', async function () {
+    const res = {};
+    const req = {
+      body: [
+        {
+          productId: 1,
+          quantity: 1,
+        },
+        {
+          productId: 2,
+          quantity: 5,
+        },
+      ],
+    };
+
+    const message = {
+      id: 1,
+      itemsSold: [
+        {
+          productId: 1,
+          quantity: 1,
+        },
+        {
+          productId: 2,
+          quantity: 5,
+        },
+      ],
+    };
+
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+    sinon.stub(salesService, 'insertSalesProducts').resolves({
+      status: 201,
+      message,
+    });
+
+    await salesController.insertSalesProducts(req, res);
+
+    expect(res.status).to.have.been.calledWith(201);
+    expect(res.json).to.have.been.calledWith(message);
+  });
+
   afterEach(sinon.restore);
 });

@@ -37,4 +37,33 @@ describe('Testa a camada service', function () {
 
     expect(insert).to.deep.equal(newProduct);
   });
+  it('Testa se o produto foi atualizado', async function () {
+    const output = {
+      status: 200,
+      message: {
+        id: 1,
+        name: 'Martelo do Batman',
+    },
+    };
+
+    sinon.stub(productsModel, 'getProductsById').resolves({ id: 1, name: 'Martelo do Batman' });
+    sinon.stub(productsModel, 'updateProduct').resolves(1);
+    const result = await productsService.updateProduct('Martelo do Batman', '1');
+    expect(result).to.deep.equal(output);
+  });
+
+  it('Testa se o produto não é atualizado caso o id seja inválido', async function () {
+    const output = {
+      status: 404,
+      message: {
+        message: 'Product not found',
+      },
+    };
+
+    sinon.stub(productsModel, 'getProductsById').resolves(undefined);
+    const result = await productsService.updateProduct('Martelo do Batman', '999');
+    expect(result).to.deep.equal(output);
+  });
+
+  afterEach(sinon.restore);
 });

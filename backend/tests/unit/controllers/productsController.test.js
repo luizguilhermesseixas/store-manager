@@ -79,5 +79,35 @@ describe('Testa a camada controller', function () {
     expect(res.json).to.have.been.calledWith(productById);
   });
 
+  it('Testa se um produto foi atualizado', async function () {
+    const res = {};
+    const req = {
+      body: {
+        name: 'Martelo do Batman',
+      },
+      params: {
+        id: '1',
+      },
+    };
+
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+    sinon.stub(productsService, 'updateProduct').resolves({
+      status: 200,
+      message: {
+        id: 1,
+        name: 'Martelo do Batman',
+      },
+    });
+
+    await productsController.updateProduct(req, res);
+
+    expect(res.status).to.have.been.calledWith(200);
+    expect(res.json).to.have.been.calledWith({
+      id: 1,
+      name: 'Martelo do Batman',
+    });
+  });
+
   afterEach(sinon.restore);
 });

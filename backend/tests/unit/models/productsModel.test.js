@@ -58,5 +58,11 @@ describe('Testa a camada model', function () {
     expect(result).to.deep.equal(newProduct);
   });
 
+  it('Testa se um produto é atualizado', async function () {
+    sinon.stub(connection, 'execute').resolves([{ affectedRows: 1 }]);
+    const result = await productsModel.updateProduct('Martelo do Batman', '1');
+    expect(result).to.equal(1);
+  });
+
   afterEach(sinon.restore);
 });
