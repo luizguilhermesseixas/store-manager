@@ -48,7 +48,7 @@ const insertProducts = async (salesObj) => {
 const saleNotFound = {
   status: 404,
   message: {
-    message: 'Sale not found',
+    message: 'Product not found',
   },
 }; 
 

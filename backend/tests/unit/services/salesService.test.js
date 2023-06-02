@@ -70,7 +70,7 @@ describe('Testa a camada service de sales', function () {
   });
 
   it('Testa se ao passar um id inválido as vendas não são cadastradas', async function () {
-    const output = { status: 404, message: { message: 'Sale not found' } };
+    const output = { status: 404, message: { message: 'Product not found' } };
 
     sinon.stub(salesModel, 'insertSales').resolves(100);
 
